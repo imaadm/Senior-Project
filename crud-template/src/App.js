@@ -5,16 +5,17 @@ import "@fontsource/roboto/700.css";
 import {
   AccountCircle,
   BarChart,
-  HorizontalRule,
   Settings,
+  Menu,
+  Add,
+  Remove,
 } from "@mui/icons-material";
+import EditIcon from "@mui/icons-material/Edit";
 import {
   AppBar,
   Divider,
   Drawer,
   IconButton,
-  Menu,
-  Paper,
   Stack,
   Toolbar,
   Typography,
@@ -23,9 +24,12 @@ import {
   CardContent,
   CardActions,
   Checkbox,
+  SpeedDial,
+  SpeedDialIcon,
+  SpeedDialAction,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import { Box, Container } from "@mui/system";
+import { Box, Container} from "@mui/system";
 import { CssBaseline } from "@mui/material";
 
 // We use Route in order to define the different routes of our application
@@ -94,25 +98,152 @@ function SideNav(props) {
 }
 function Tasks(props) {
   return (
-    <Card sx={{ minWidth: 300, mx: 5, mt: 5 }}>
+    <Card sx={{ minWidth: 275, mx: 5, mt: 5 }}>
       <CardContent>
         <Typography
           sx={{ fontSize: 18, pb: 2 }}
           textAlign="center"
           variant="subtitle2"
         >
-          Current Tasks
+          Upcoming Tasks
         </Typography>
         <Task />
         <Task />
         <Task />
       </CardContent>
-      <CardActions>
-        <Button size="small">Add Task</Button>
+      <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <SpeedDial
+          direction="left"
+          ariaLabel="SpeedDial"
+          icon={<SpeedDialIcon icon={<Menu />} />}
+        >
+          <SpeedDialAction
+            key={"del"}
+            icon={<SpeedDialIcon icon={<Remove />} />}
+            tooltipTitle={"delete"}
+          />
+          <SpeedDialAction
+            key={"edit"}
+            icon={<SpeedDialIcon icon={<EditIcon />} />}
+            tooltipTitle={"edit"}
+          />
+          <SpeedDialAction
+            key={"add"}
+            icon={<SpeedDialIcon icon={<Add />} />}
+            tooltipTitle={"add"}
+          />
+        </SpeedDial>
       </CardActions>
     </Card>
   );
 }
+
+function CalCard(props) {
+  return (
+    <Card sx={{ width: 25, height: 25 }} style={{backgroundColor: "lightblue"}}>
+      
+    </Card>
+  );
+}
+
+function Schedule(props) {
+  return (
+    <Grid container sx={{ width: 400, height: 300, mt: 4, ml: 110}} spacing={0} columns={6} >
+      <Grid item  xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>{" "}
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+    </Grid>
+  );
+}
+
+
 
 function Task(props) {
   return (
@@ -127,13 +258,13 @@ function Task(props) {
 
 function Body(props) {
   return (
-    <Grid container sx={{ minWidth: 100 }}>
+    <Grid container >
       <Grid item>
         <Tasks />
       </Grid>
-      {/* <Grid item>
-        <Tasks />
-      </Grid> */}
+      <Grid item>
+        <Schedule />
+      </Grid>
     </Grid>
   );
 }
@@ -142,7 +273,7 @@ function App() {
   return (
     <Box>
       <SideNav />
-      <Container sx={{ ml: 16, mt: 8 }}>
+      <Container sx={{ ml: 16, mt: 8}} maxWidth={false}>
         <Bar />
         <Body />
       </Container>
