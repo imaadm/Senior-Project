@@ -28,6 +28,8 @@ import {
   SpeedDialIcon,
   SpeedDialAction,
   Paper,
+  Tabs,
+  TabPanel,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import { Box, Container } from "@mui/system";
@@ -41,6 +43,7 @@ import Navbar from "./components/navbar";
 import RecordList from "./components/recordList";
 import Edit from "./components/edit";
 import Create from "./components/create";
+import { Tab } from "bootstrap";
 
 function BackendTestBar(props) {
   return (
@@ -144,6 +147,9 @@ function CalCard(props) {
     <Card
       sx={{ width: 25, height: 25 }}
       style={{ backgroundColor: "lightblue" }}
+      onClick={() => {
+        alert("✔️ This works on every component!");
+      }}
     ></Card>
   );
 }
@@ -164,7 +170,7 @@ function Schedule(props) {
           container
           sx={{ width: 300, height: 270, py: 2, pl: 5 }}
           spacing={0}
-          columns={6}
+          columns={7}
         >
           <Grid item xs={1}>
             <CalCard />
@@ -250,13 +256,7 @@ function Schedule(props) {
           <Grid item xs={1}>
             <CalCard />
           </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-        </Grid>{" "}
+        </Grid>
       </Paper>
     </Container>
   );
@@ -273,16 +273,46 @@ function Task(props) {
   );
 }
 
+function Panel(props) {
+  return (
+    <Paper sx={{ pl: 1, mt: 6}}>
+      <Stack>
+        <Typography>Tasks</Typography>
+        <Grid container columns={5}>
+          <Grid item xs={1}>
+            <Typography>Name</Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <Typography>Category</Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <Typography>Assigned Date</Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <Typography>Due Date</Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <Typography>Priority</Typography>
+          </Grid>
+        </Grid>
+      </Stack>
+    </Paper>
+  );
+}
+
 function Body(props) {
   return (
-    <Grid container>
-      <Grid item>
-        <Tasks />
+    <Stack>
+      <Grid container>
+        <Grid item>
+          <Tasks />
+        </Grid>
+        <Grid item>
+          <Schedule />
+        </Grid>
       </Grid>
-      <Grid item>
-        <Schedule />
-      </Grid>
-    </Grid>
+      <Panel />
+    </Stack>
   );
 }
 
