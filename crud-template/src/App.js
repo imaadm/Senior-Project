@@ -156,8 +156,8 @@ function CalCard(props) {
 
 function Schedule(props) {
   return (
-    <Container sx={{ mt: 4 }}>
-      <Paper sx={{ width: 325, height: 305 }} elevation={3}>
+    <Container sx={{ mt: 4, ml: 28 }} >
+      <Paper sx={{ width: 325, height: 305 }}  elevation={3}>
         <Typography
           sx={{ pt: 2 }}
           variant="subtitle2"
@@ -300,15 +300,29 @@ function Panel(props) {
   );
 }
 
+function DateTime(props){
+  return (
+    <Stack textAlign={"center"} sx={{ml: 15}} >
+    <Typography >Date</Typography>
+    <Typography>Time</Typography>
+    <Typography>Due Today:</Typography>
+
+    </Stack>
+  );
+}
+
 function Body(props) {
   return (
     <Stack>
       <Grid container>
-        <Grid item>
+        <Grid item >
           <Tasks />
         </Grid>
-        <Grid item>
-          <Schedule />
+        <Grid item style={{ flex: 1 }}>
+          <DateTime/>
+        </Grid>
+        <Grid item style={{ flex: 1 }} >
+          <Schedule  />
         </Grid>
       </Grid>
       <Panel />
