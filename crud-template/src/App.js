@@ -27,9 +27,10 @@ import {
   SpeedDial,
   SpeedDialIcon,
   SpeedDialAction,
+  Paper,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import { Box, Container} from "@mui/system";
+import { Box, Container } from "@mui/system";
 import { CssBaseline } from "@mui/material";
 
 // We use Route in order to define the different routes of our application
@@ -140,110 +141,126 @@ function Tasks(props) {
 
 function CalCard(props) {
   return (
-    <Card sx={{ width: 25, height: 25 }} style={{backgroundColor: "lightblue"}}>
-      
-    </Card>
+    <Card
+      sx={{ width: 25, height: 25 }}
+      style={{ backgroundColor: "lightblue" }}
+    ></Card>
   );
 }
 
 function Schedule(props) {
   return (
-    <Grid container sx={{ width: 400, height: 300, mt: 4, ml: 110}} spacing={0} columns={6} >
-      <Grid item  xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>{" "}
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-      <Grid item xs={1}>
-        <CalCard />
-      </Grid>
-    </Grid>
+    <Container sx={{ mt: 4 }}>
+      <Paper sx={{ width: 325, height: 305 }} elevation={3}>
+        <Typography
+          sx={{ pt: 2 }}
+          variant="subtitle2"
+          fontSize={20}
+          textAlign={"center"}
+        >
+          Calendar
+        </Typography>
+        <Grid
+          container
+          sx={{ width: 300, height: 270, py: 2, pl: 5 }}
+          spacing={0}
+          columns={6}
+        >
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>{" "}
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+          <Grid item xs={1}>
+            <CalCard />
+          </Grid>
+        </Grid>{" "}
+      </Paper>
+    </Container>
   );
 }
-
-
 
 function Task(props) {
   return (
@@ -258,7 +275,7 @@ function Task(props) {
 
 function Body(props) {
   return (
-    <Grid container >
+    <Grid container>
       <Grid item>
         <Tasks />
       </Grid>
@@ -273,7 +290,7 @@ function App() {
   return (
     <Box>
       <SideNav />
-      <Container sx={{ ml: 16, mt: 8}} maxWidth={false}>
+      <Container sx={{ ml: 16, mt: 8 }} maxWidth={false}>
         <Bar />
         <Body />
       </Container>
