@@ -9,7 +9,7 @@ class CreateTask extends Component {
     this.state = {
       name: '',
       category:'',
-      priority:'',
+      priority:0,
       assignedDate:'',
       dueDate:'',
       
@@ -45,6 +45,7 @@ class CreateTask extends Component {
       })
       .catch(err => {
         console.log("Error in CreateTask!");
+        console.log(err);
       })
   };
 
@@ -66,17 +67,16 @@ class CreateTask extends Component {
               </p>
 
               <form noValidate onSubmit={this.onSubmit}>
-                <div className='form-group'>
+              <div className='form-group'>
                   <input
                     type='text'
-                    placeholder='Title of the Task'
-                    name='title'
+                    placeholder='Task Name'
+                    name='name'
                     className='form-control'
                     value={this.state.name}
                     onChange={this.onChange}
                   />
                 </div>
-                <br />
 
                 <div className='form-group'>
                   <input
@@ -92,8 +92,8 @@ class CreateTask extends Component {
                 <div className='form-group'>
                   <input
                     type='date'
-                    placeholder='due_date'
-                    name='due_date'
+                    placeholder='Due Date'
+                    name='dueDate'
                     className='form-control'
                     value={this.state.dueDate}
                     onChange={this.onChange}

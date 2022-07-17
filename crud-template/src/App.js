@@ -34,17 +34,14 @@ import {
 import Button from "@mui/material/Button";
 import { Box, Container } from "@mui/system";
 import { CssBaseline } from "@mui/material";
-
+import React from "react";
 // We use Route in order to define the different routes of our application
 import { Route, Routes } from "react-router-dom";
 
-import CreateTask from './components/CreateTask';
+import CreateTask from "./components/CreateTask";
 // import ShowTaskList from './components/ShowTaskList';
 // import ShowBookDetails from './components/ShowTaskDetails';
 // import UpdateTaskInfo from './components/UpdateTaskInfo';
-
-// We import all the components we need in our app
-
 
 function Bar(props) {
   return (
@@ -142,10 +139,106 @@ function CalCard(props) {
   );
 }
 
+function CalGrid(props) {
+  return (
+    <Grid
+      container
+      sx={{ width: 300, height: 270, py: 2, pl: 5 }}
+      spacing={0}
+      columns={7}
+    >
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>{" "}
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard />
+      </Grid>
+    </Grid>
+  );
+}
+
 function Schedule(props) {
   return (
-    <Container sx={{ mt: 4, mr:15 }}  >
-      <Paper sx={{ width: 325, height: 305 }}   elevation={3}>
+    <Container sx={{ mt: 4, mr: 15 }}>
+      <Paper sx={{ width: 325, height: 305 }} elevation={3}>
         <Typography
           sx={{ pt: 2 }}
           variant="subtitle2"
@@ -154,97 +247,7 @@ function Schedule(props) {
         >
           Calendar
         </Typography>
-        <Grid
-          container
-          sx={{ width: 300, height: 270, py: 2, pl: 5 }}
-          spacing={0}
-          columns={7}
-        >
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>{" "}
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-          <Grid item xs={1}>
-            <CalCard />
-          </Grid>
-        </Grid>
+        <CalGrid />
       </Paper>
     </Container>
   );
@@ -263,7 +266,7 @@ function Task(props) {
 
 function Panel(props) {
   return (
-    <Paper sx={{ pl: 1, mt: 6}}>
+    <Paper sx={{ pl: 1, mt: 6 }}>
       <Stack>
         <Typography>Tasks</Typography>
         <Grid container columns={5}>
@@ -288,13 +291,12 @@ function Panel(props) {
   );
 }
 
-function DateTime(props){
+function DateTime(props) {
   return (
-    <Stack textAlign={"center"} sx={{}} >
-    <Typography >Date</Typography>
-    <Typography>Time</Typography>
-    <Typography>Due Today:</Typography>
-
+    <Stack textAlign={"center"} sx={{}}>
+      <Typography>Date</Typography>
+      <Typography>Time</Typography>
+      <Typography>Due Today:</Typography>
     </Stack>
   );
 }
@@ -303,17 +305,18 @@ function Body(props) {
   return (
     <Stack>
       <Grid container>
-        <Grid item >
+        <Grid item>
           <Tasks />
         </Grid>
         <Grid item style={{ flex: 1 }}>
-          <DateTime/>
+          <DateTime />
         </Grid>
-        <Grid item >
-          <Schedule  />
+        <Grid item>
+          <Schedule />
         </Grid>
       </Grid>
       <Panel />
+
     </Stack>
   );
 }
@@ -325,8 +328,9 @@ function App() {
       <Container sx={{ ml: 16, mt: 8 }} maxWidth={false}>
         <Bar />
         <Body />
-        <Container sx={{ ml: 2}}>
-        <CreateTask/></Container>
+        <Stack direction={"row"} sx={{ ml: 2, mt:5 }}>
+          <CreateTask />
+        </Stack>
       </Container>
     </Box>
   );

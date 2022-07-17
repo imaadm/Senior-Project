@@ -14,6 +14,8 @@ app.use('/api/tasks', tasks);
 // get driver connection
 const dbo = require("./db/conn");
  
+app.get("/", (req, res) => res.send("Hello world!"));
+
 
 app.listen(port, () => {
   // perform a database connection when server starts
