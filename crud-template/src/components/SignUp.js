@@ -82,7 +82,7 @@ class SignUp extends Component {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign up
+              Register
             </Typography>
             <Box
               component="form"
@@ -131,7 +131,7 @@ class SignUp extends Component {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign Up
+                Create Account
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
