@@ -1,28 +1,29 @@
+// app.js
 
-const express = require("express");
-const app = express();
-const cors = require("cors");
-require("dotenv").config({ path: "./config.env" });
-const port = process.env.PORT || 5000;
-app.use(cors());
-app.use(express.json());
+const express = require('express');
+const connectDB = require('./config/db');
+var cors = require('cors');
 
+// routes
 const tasks = require('./routes/api/tasks');
-// app.use(require("./routes/api/tasks"));
+
+const app = express();
+
+// Connect Database
+connectDB();
+
+// cors
+app.use(cors({ origin: true, credentials: true }));
+
+// Init Middleware
+app.use(express.json({ extended: false }));
+
+app.get('/', (req, res) => res.send('Hello world!'));
+
+// use Routes
 app.use('/api/tasks', tasks);
 
-// get driver connection
-const dbo = require("./db/conn");
- 
-app.get("/", (req, res) => res.send("Hello world!"));
 
+const port = process.env.PORT || 5000;
 
-app.listen(port, () => {
-  // perform a database connection when server starts
-  dbo.connectToServer(function (err) {
-    if (err) console.error(err);
- 
-  });
-  console.log(`Server is running on port: ${port}`);
-});
-
+app.listen(port, () => console.log(`Server running on port ${port}`));

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import '../App.css';
 import axios from 'axios';
 
 
@@ -9,10 +10,8 @@ class CreateTask extends Component {
     this.state = {
       name: '',
       category:'',
+      due_date:'',
       priority:0,
-      assignedDate:'',
-      dueDate:'',
-      
     };
   }
 
@@ -26,9 +25,8 @@ class CreateTask extends Component {
     const data = {
       name: this.state.name,
       category: this.state.category,
+      due_date: this.state.due_date,
       priority: this.state.priority,
-      assignedDate: this.state.assignedDate,
-      dueDate: this.state.dueDate,
     };
 
     axios
@@ -37,15 +35,13 @@ class CreateTask extends Component {
         this.setState({
             name: '',
             category:'',
-            priority:'',
-            assignedDate:'',
-            dueDate:'',
+            due_date:'',
+            priority:0,
         })
         this.props.history.push('/');
       })
       .catch(err => {
         console.log("Error in CreateTask!");
-        console.log(err);
       })
   };
 
@@ -57,7 +53,7 @@ class CreateTask extends Component {
             <div className="col-md-8 m-auto">
               <br />
               <Link to="/" className="btn btn-outline-warning float-left">
-                  Show Task List
+                  Show BooK List
               </Link>
             </div>
             <div className="col-md-8 m-auto">
@@ -67,13 +63,25 @@ class CreateTask extends Component {
               </p>
 
               <form noValidate onSubmit={this.onSubmit}>
-              <div className='form-group'>
+                <div className='form-group'>
                   <input
                     type='text'
-                    placeholder='Task Name'
-                    name='name'
+                    placeholder='Title of the Task'
+                    name='title'
                     className='form-control'
-                    value={this.state.name}
+                    value={this.state.title}
+                    onChange={this.onChange}
+                  />
+                </div>
+                <br />
+
+                <div className='form-group'>
+                  <input
+                    type='text'
+                    placeholder='ISBN'
+                    name='isbn'
+                    className='form-control'
+                    value={this.state.isbn}
                     onChange={this.onChange}
                   />
                 </div>
@@ -81,10 +89,21 @@ class CreateTask extends Component {
                 <div className='form-group'>
                   <input
                     type='text'
-                    placeholder='Category'
-                    name='category'
+                    placeholder='Author'
+                    name='author'
                     className='form-control'
-                    value={this.state.category}
+                    value={this.state.author}
+                    onChange={this.onChange}
+                  />
+                </div>
+
+                <div className='form-group'>
+                  <input
+                    type='text'
+                    placeholder='Describe this task'
+                    name='description'
+                    className='form-control'
+                    value={this.state.description}
                     onChange={this.onChange}
                   />
                 </div>
@@ -92,20 +111,20 @@ class CreateTask extends Component {
                 <div className='form-group'>
                   <input
                     type='date'
-                    placeholder='Due Date'
-                    name='dueDate'
+                    placeholder='published_date'
+                    name='published_date'
                     className='form-control'
-                    value={this.state.dueDate}
+                    value={this.state.published_date}
                     onChange={this.onChange}
                   />
                 </div>
                 <div className='form-group'>
                   <input
-                    type='number'
-                    placeholder='Priority'
-                    name='priority'
+                    type='text'
+                    placeholder='Publisher of this Task'
+                    name='publisher'
                     className='form-control'
-                    value={this.state.priority}
+                    value={this.state.publisher}
                     onChange={this.onChange}
                   />
                 </div>

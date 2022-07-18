@@ -3,8 +3,8 @@
 const express = require('express');
 const router = express.Router();
 
-// Load Task model
-const Task = require('../../models/taskModel');
+// Load Book model
+const Task = require('../../models/Task');
 
 // @route GET api/tasks/test
 // @description tests tasks route
@@ -17,7 +17,7 @@ router.get('/test', (req, res) => res.send('task route testing!'));
 router.get('/', (req, res) => {
   Task.find()
     .then(tasks => res.json(tasks))
-    .catch(err => res.status(404).json({ notasksfound: 'No tasks found' }));
+    .catch(err => res.status(404).json({ notasksfound: 'No Tasks found' }));
 });
 
 // @route GET api/tasks/:id
