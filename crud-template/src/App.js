@@ -10,6 +10,7 @@ import {
   Add,
   Remove,
 } from "@mui/icons-material";
+import CheckIcon from "@mui/icons-material/Check";
 import EditIcon from "@mui/icons-material/Edit";
 import {
   AppBar,
@@ -30,12 +31,18 @@ import {
   Paper,
   Tabs,
   TabPanel,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  DialogActions,
+  Fab,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import { Box, Container } from "@mui/system";
 import { CssBaseline } from "@mui/material";
 import React from "react";
-import { useState } from "react";
 // We use Route in order to define the different routes of our application
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -43,6 +50,7 @@ import CreateTask from "./components/CreateTask";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import ProtectedRoute from "./components/ProtectedRoute";
+import DateTime from "./components/DateTime";
 
 // import ShowTaskList from './components/ShowTaskList';
 // import ShowBookDetails from './components/ShowTaskDetails';
@@ -92,21 +100,26 @@ function SideNav(props) {
 }
 function Tasks(props) {
   return (
-    <Card sx={{ minWidth: 275, mx: 5, mt: 5 }}>
+    <Card sx={{ minWidth: 350, mx: 5, mt: 5 }}>
       <CardContent>
         <Typography
-          sx={{ fontSize: 18, pb: 2 }}
+          sx={{ fontSize: 25, pb: 2 }}
           textAlign="center"
           variant="subtitle2"
         >
           Upcoming Tasks
         </Typography>
-        <Task />
-        <Task />
-        <Task />
+        <Stack>
+          <Task />
+          <Task />
+          <Task />
+        </Stack>
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <SpeedDial
+        <Fab color="primary" aria-label="clear">
+          <CheckIcon />
+        </Fab>
+        {/* <SpeedDial
           direction="left"
           ariaLabel="SpeedDial"
           icon={<SpeedDialIcon icon={<Menu />} />}
@@ -126,7 +139,7 @@ function Tasks(props) {
             icon={<SpeedDialIcon icon={<Add />} />}
             tooltipTitle={"add"}
           />
-        </SpeedDial>
+        </SpeedDial> */}
       </CardActions>
     </Card>
   );
@@ -262,7 +275,7 @@ function Task(props) {
   return (
     <Stack direction={"row"} alignItems="center">
       <Checkbox size="small"></Checkbox>
-      <Typography sx={{ fontSize: 15 }} variant="body2">
+      <Typography sx={{ fontSize: 18 }} variant="body2">
         Example Task
       </Typography>
     </Stack>
@@ -271,40 +284,43 @@ function Task(props) {
 
 function Panel(props) {
   return (
-    <Paper sx={{ pl: 1, mt: 6 }}>
-      <Stack>
-        <Typography>Tasks</Typography>
-        <Grid container columns={5}>
-          <Grid item xs={1}>
-            <Typography>Name</Typography>
+    <CssBaseline>
+      <Paper sx={{ pl: 1, mt: 6 }}>
+        <Stack>
+          <Typography variant={"h4"}>Tasks</Typography>
+          <Grid container columns={5}>
+            <Grid item xs={1}>
+              <Typography variant={"h5"}>Name</Typography>
+            </Grid>
+            <Grid item xs={1}>
+              <Typography variant={"h5"}>Category</Typography>
+            </Grid>
+            <Grid item xs={1}>
+              <Typography variant={"h5"}>Assigned Date</Typography>
+            </Grid>
+            <Grid item xs={1}>
+              <Typography variant={"h5"}>Due Date</Typography>
+            </Grid>
+            <Grid item xs={1}>
+              <Typography variant={"h5"}>Priority</Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={1}>
-            <Typography>Category</Typography>
-          </Grid>
-          <Grid item xs={1}>
-            <Typography>Assigned Date</Typography>
-          </Grid>
-          <Grid item xs={1}>
-            <Typography>Due Date</Typography>
-          </Grid>
-          <Grid item xs={1}>
-            <Typography>Priority</Typography>
-          </Grid>
-        </Grid>
-      </Stack>
-    </Paper>
+        </Stack>
+      </Paper>
+    </CssBaseline>
   );
 }
 
-function DateTime(props) {
-  return (
-    <Stack textAlign={"center"} sx={{}}>
-      <Typography>Date</Typography>
-      <Typography>Time</Typography>
-      <Typography>Due Today:</Typography>
-    </Stack>
-  );
-}
+// function DateTime(props) {
+  
+//   return (
+//     <Stack textAlign={"center"} sx={{}}>
+//       <Typography>Date</Typography>
+//       <Typography>Time</Typography>
+//       <Typography>Due Today:</Typography>
+//     </Stack>
+//   );
+// }
 
 function Body(props) {
   return (
@@ -347,7 +363,7 @@ function App() {
         path="/"
         element={
           // <ProtectedRoute>
-            <Dash />
+          <Dash />
           // </ProtectedRoute>
         }
       ></Route>
