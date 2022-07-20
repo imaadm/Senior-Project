@@ -12,6 +12,7 @@ import {
 } from "@mui/icons-material";
 import CheckIcon from "@mui/icons-material/Check";
 import EditIcon from "@mui/icons-material/Edit";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   AppBar,
   Divider,
@@ -64,9 +65,6 @@ function Bar(props) {
           <Typography ml={20} variant="h6" sx={{ flexGrow: 1 }}>
             App
           </Typography>
-          <IconButton>
-            <AccountCircle />
-          </IconButton>
         </Toolbar>
       </AppBar>
     </CssBaseline>
@@ -92,6 +90,15 @@ function SideNav(props) {
             startIcon={<Settings />}
           >
             Settings
+          </Button>{" "}
+          <Button
+            sx={{ flexGrow: 1 }}
+            size="small"
+            variant="outlined"
+            color="error"
+            startIcon={<CloseIcon />}
+          >
+            Sign Out
           </Button>
         </Stack>
       </Box>
@@ -312,7 +319,7 @@ function Panel(props) {
 }
 
 // function DateTime(props) {
-  
+
 //   return (
 //     <Stack textAlign={"center"} sx={{}}>
 //       <Typography>Date</Typography>
