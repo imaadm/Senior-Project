@@ -35,12 +35,14 @@ import Button from "@mui/material/Button";
 import { Box, Container } from "@mui/system";
 import { CssBaseline } from "@mui/material";
 import React from "react";
+import { useState } from "react";
 // We use Route in order to define the different routes of our application
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import CreateTask from "./components/CreateTask";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // import ShowTaskList from './components/ShowTaskList';
 // import ShowBookDetails from './components/ShowTaskDetails';
@@ -323,27 +325,32 @@ function Body(props) {
   );
 }
 
-function Dash(props){
-  return(<Box>
-    <SideNav />
-    <Container sx={{ ml: 16, mt: 8 }} maxWidth={false}>
-      <Bar />
-      <Body />
-      <Stack direction={"row"} sx={{ ml: 2, mt: 5 }}>
-        <CreateTask />
-      </Stack>
-    </Container>
-  </Box>);
+function Dash(props) {
+  return (
+    <Box>
+      <SideNav />
+      <Container sx={{ ml: 16, mt: 8 }} maxWidth={false}>
+        <Bar />
+        <Body />
+      </Container>
+    </Box>
+  );
 }
 
 function App() {
   return (
-      <Routes>
-        <Route path="" element={<Dash/>}></Route>
-        <Route path="/login" element={<SignIn/>}></Route>
-        <Route path="/register" element={<SignUp/>}></Route>
-
-      </Routes>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          // <ProtectedRoute>
+            <Dash />
+          // </ProtectedRoute>
+        }
+      ></Route>
+      <Route path="/login" element={<SignIn />}></Route>
+      <Route path="/register" element={<SignUp />}></Route>
+    </Routes>
   );
 }
 
