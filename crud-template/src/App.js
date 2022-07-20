@@ -46,12 +46,13 @@ import { CssBaseline } from "@mui/material";
 import React from "react";
 // We use Route in order to define the different routes of our application
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import { useEffect, useState } from "react";
 import CreateTask from "./components/CreateTask";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DateTime from "./components/DateTime";
+import axios from "axios";
 
 // import ShowTaskList from './components/ShowTaskList';
 // import ShowBookDetails from './components/ShowTaskDetails';
@@ -117,8 +118,6 @@ function Tasks(props) {
           Upcoming Tasks
         </Typography>
         <Stack>
-          <Task />
-          <Task />
           <Task />
         </Stack>
       </CardContent>
@@ -279,12 +278,40 @@ function Schedule(props) {
 }
 
 function Task(props) {
+  const [tasks, setTasks] = useState({});
+  const [isLoading, setLoading] = useState(true);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/tasks")
+      .then((res) => {
+        setTasks({ tasks: Array.from(res.data) });
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("Error from Tasks Load");
+        console.log(err);
+      });
+  },[]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  console.log(tasks.tasks);
+let taskList = tasks.tasks;
+
   return (
     <Stack direction={"row"} alignItems="center">
-      <Checkbox size="small"></Checkbox>
-      <Typography sx={{ fontSize: 18 }} variant="body2">
-        Example Task
-      </Typography>
+      {" "}
+      <div>
+        <Checkbox size="small"></Checkbox>{" "}
+        <Typography sx={{ fontSize: 18 }} variant="body2">
+          Example Task
+        </Typography>
+        {taskList.map(({ name, id }) => (
+          <p key={id}>{name}  </p>
+        ))}
+      </div>
     </Stack>
   );
 }
@@ -330,11 +357,13 @@ function Panel(props) {
 // }
 
 function Body(props) {
+  // console.log(props.tasks);
+
   return (
     <Stack>
       <Grid container>
         <Grid item>
-          <Tasks />
+          <Tasks  />
         </Grid>
         <Grid item style={{ flex: 1 }}>
           <DateTime />
@@ -349,12 +378,34 @@ function Body(props) {
 }
 
 function Dash(props) {
+  const [tasks, setTasks] = useState({});
+
+  const [isLoading, setLoading] = useState(true);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/tasks")
+      .then((res) => {
+        setTasks({ tasks: res.data });
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("Error from Dash Load");
+        console.log(err);
+      });
+  },[]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // console.log(tasks);
+
   return (
     <Box>
       <SideNav />
       <Container sx={{ ml: 18, mt: 8 }} maxWidth={false}>
         <Bar />
-        <Body />
+        <Body tasks={tasks} />
         <Stack direction={"row"} sx={{ ml: 2, mt: 5 }}>
           <CreateTask />
         </Stack>

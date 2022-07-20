@@ -33,8 +33,6 @@ function Copyright(props) {
   );
 }
 export default function SignIn() {
-
-
   const navigate = useNavigate();
   let users = [];
   let isValid = false;
@@ -48,6 +46,8 @@ export default function SignIn() {
     });
 
   const handleSubmit = (event) => {
+    console.log(users);
+
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const currentUser = data.get("currentUser");
@@ -69,12 +69,11 @@ export default function SignIn() {
       }
     }
     const isAuthenticated = localStorage.getItem("isAuthenticated");
-    if (isValid === true){
+    if (isValid === true) {
       localStorage.setItem("userInfo", userKey);
-      navigate("/", {replace: true});
+      navigate("/", { replace: true });
       console.log(isAuthenticated);
-    }
-    else{
+    } else {
       alert("Invalid Login");
     }
     // else
