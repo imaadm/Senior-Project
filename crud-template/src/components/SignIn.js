@@ -56,6 +56,7 @@ export default function SignIn() {
       currentUser: data.get("currentUser"),
       currentPass: data.get("currentPass"),
     });
+    const userKey = String(currentPass) + String(currentUser);
     for (let i = 0; i < users.length; i++) {
       if (users[i].username === currentUser) {
         for (let j = 0; j < users.length; j++) {
@@ -69,7 +70,7 @@ export default function SignIn() {
     }
     const isAuthenticated = localStorage.getItem("isAuthenticated");
     if (isValid === true){
-      localStorage.setItem("userInfo", data);
+      localStorage.setItem("userInfo", userKey);
       navigate("/", {replace: true});
       console.log(isAuthenticated);
     }

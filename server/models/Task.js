@@ -1,6 +1,6 @@
 // models/Book.js
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const TaskSchema = new mongoose.Schema({
   name: {
@@ -9,14 +9,16 @@ const TaskSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    required: true
   },
   due_date: {
     type: String,
   },
   priority: {
-    type: Number
-  }
+    type: Number,
+  },
+  id: {
+    type: String,
+  },
 });
 
-module.exports = Task = mongoose.model('Task', TaskSchema);
+module.exports = Task = mongoose.model("Task", TaskSchema);

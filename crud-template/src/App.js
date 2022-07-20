@@ -332,6 +332,9 @@ function Dash(props) {
       <Container sx={{ ml: 16, mt: 8 }} maxWidth={false}>
         <Bar />
         <Body />
+        <Stack direction={"row"} sx={{ ml: 2, mt: 5 }}>
+          <CreateTask />
+        </Stack>
       </Container>
     </Box>
   );

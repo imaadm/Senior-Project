@@ -19,12 +19,13 @@ class CreateTask extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-
+    const userKey = localStorage.getItem("userInfo");
     const data = {
       name: this.state.name,
       category: this.state.category,
       due_date: this.state.due_date,
       priority: this.state.priority,
+      id: userKey
     };
 
     axios
@@ -35,6 +36,7 @@ class CreateTask extends Component {
             category:'',
             due_date:'',
             priority:0,
+            id: ''
         })
         this.props.history.push('/');
       })
@@ -65,9 +67,9 @@ class CreateTask extends Component {
                   <input
                     type='text'
                     placeholder='Title of the Task'
-                    name='title'
+                    name='name'
                     className='form-control'
-                    value={this.state.title}
+                    value={this.state.name}
                     onChange={this.onChange}
                   />
                 </div>
@@ -84,27 +86,6 @@ class CreateTask extends Component {
                   />
                 </div>
 
-                <div className='form-group'>
-                  <input
-                    type='text'
-                    placeholder='Author'
-                    name='author'
-                    className='form-control'
-                    value={this.state.author}
-                    onChange={this.onChange}
-                  />
-                </div>
-
-                <div className='form-group'>
-                  <input
-                    type='text'
-                    placeholder='Describe this task'
-                    name='description'
-                    className='form-control'
-                    value={this.state.description}
-                    onChange={this.onChange}
-                  />
-                </div>
 
                 <div className='form-group'>
                   <input
