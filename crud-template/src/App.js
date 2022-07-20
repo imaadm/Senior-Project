@@ -62,8 +62,8 @@ function Bar(props) {
     <CssBaseline>
       <AppBar>
         <Toolbar>
-          <Typography ml={20} variant="h6" sx={{ flexGrow: 1 }}>
-            App
+          <Typography ml={23} variant="h5" sx={{ flexGrow: 1 }}>
+            Task Manager
           </Typography>
         </Toolbar>
       </AppBar>
@@ -75,16 +75,16 @@ function SideNav(props) {
   return (
     <Drawer variant="permanent">
       <Box p={2} textAlign="center">
-        <Typography p={1} variant="h6">
+        <Typography p={1} variant="h5">
           Navigation
         </Typography>
         <Divider variant="middle" />
         <Stack mt={2} spacing={2}>
-          <Button size="small" variant="outlined" startIcon={<BarChart />}>
+          <Button size="medium" variant="outlined" startIcon={<BarChart />}>
             Dashboard
           </Button>
           <Button
-            size="small"
+            size="medium"
             variant="outlined"
             color="secondary"
             startIcon={<Settings />}
@@ -93,7 +93,7 @@ function SideNav(props) {
           </Button>{" "}
           <Button
             sx={{ flexGrow: 1 }}
-            size="small"
+            size="medium"
             variant="outlined"
             color="error"
             startIcon={<CloseIcon />}
@@ -352,7 +352,7 @@ function Dash(props) {
   return (
     <Box>
       <SideNav />
-      <Container sx={{ ml: 16, mt: 8 }} maxWidth={false}>
+      <Container sx={{ ml: 18, mt: 8 }} maxWidth={false}>
         <Bar />
         <Body />
         <Stack direction={"row"} sx={{ ml: 2, mt: 5 }}>
