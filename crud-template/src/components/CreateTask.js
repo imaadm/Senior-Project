@@ -6,9 +6,9 @@ class CreateTask extends Component {
   constructor() {
     super();
     this.state = {
-      name: '',
-      category:'',
-      due_date:'',
+      name: 'null',
+      category:'null',
+      due_date:'null',
       priority:0,
     };
   }

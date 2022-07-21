@@ -117,35 +117,18 @@ function Tasks(props) {
         >
           Upcoming Tasks
         </Typography>
-        <Stack>
-          <Task />
-        </Stack>
+        <Task tasks={props.tasks} />
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Fab color="primary" aria-label="clear">
+        <Fab
+          onClick={() => {
+            console.log("onClick");
+          }}
+          color="primary"
+          aria-label="clear"
+        >
           <CheckIcon />
         </Fab>
-        {/* <SpeedDial
-          direction="left"
-          ariaLabel="SpeedDial"
-          icon={<SpeedDialIcon icon={<Menu />} />}
-        >
-          <SpeedDialAction
-            key={"del"}
-            icon={<SpeedDialIcon icon={<Remove />} />}
-            tooltipTitle={"delete"}
-          />
-          <SpeedDialAction
-            key={"edit"}
-            icon={<SpeedDialIcon icon={<EditIcon />} />}
-            tooltipTitle={"edit"}
-          />
-          <SpeedDialAction
-            key={"add"}
-            icon={<SpeedDialIcon icon={<Add />} />}
-            tooltipTitle={"add"}
-          />
-        </SpeedDial> */}
       </CardActions>
     </Card>
   );
@@ -278,65 +261,62 @@ function Schedule(props) {
 }
 
 function Task(props) {
-  const [tasks, setTasks] = useState({});
-  const [isLoading, setLoading] = useState(true);
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/tasks")
-      .then((res) => {
-        setTasks({ tasks: Array.from(res.data) });
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log("Error from Tasks Load");
-        console.log(err);
-      });
-  },[]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  console.log(tasks.tasks);
-let taskList = tasks.tasks;
+  console.log(props.tasks);
+  let taskList = props.tasks.tasks;
 
   return (
-    <Stack direction={"row"} alignItems="center">
-      {" "}
-      <div>
-        <Checkbox size="small"></Checkbox>{" "}
-        <Typography sx={{ fontSize: 18 }} variant="body2">
-          Example Task
-        </Typography>
-        {taskList.map(({ name, id }) => (
-          <p key={id}>{name}  </p>
-        ))}
-      </div>
+    <Stack direction={"column"}>
+      {taskList.map(({ name, id, due_date }) => (
+        <Stack direction={"row"} alignItems="center">
+          <Checkbox size="small" />
+          <Typography key={id}>{name} </Typography>
+          <Typography flexGrow={1}>{due_date} </Typography>
+        </Stack>
+      ))}
     </Stack>
   );
 }
 
 function Panel(props) {
+  let taskList = props.tasks.tasks;
+
   return (
     <CssBaseline>
       <Paper sx={{ pl: 1, mt: 6 }}>
         <Stack>
-          <Typography variant={"h4"}>Tasks</Typography>
-          <Grid container columns={5}>
-            <Grid item xs={1}>
-              <Typography variant={"h5"}>Name</Typography>
+          <Typography variant={"h3"} sx={{mb: 1}}>Tasks</Typography>
+          <Grid container columns={4} >
+            <Grid item xs={1} sx={{mb: 1}}>
+              <Typography variant={"h4"}>Name</Typography>
             </Grid>
-            <Grid item xs={1}>
-              <Typography variant={"h5"}>Category</Typography>
+            <Grid item xs={1} sx={{mb: 1}}>
+              <Typography variant={"h4"}>Category</Typography>
             </Grid>
-            <Grid item xs={1}>
-              <Typography variant={"h5"}>Assigned Date</Typography>
+            <Grid item xs={1} sx={{mb: 1}}>
+              <Typography variant={"h4"}>Due Date</Typography>
             </Grid>
-            <Grid item xs={1}>
-              <Typography variant={"h5"}>Due Date</Typography>
+            <Grid item xs={1} sx={{mb: 1}}>
+              <Typography variant={"h4"}>Priority</Typography>
+            </Grid>{" "}
+            <Grid item xs={1} >
+              {taskList.map(({ name }) => (
+                <Typography variant={"h5"} sx = {{my: 1}}>{name} </Typography>
+              ))}{" "}
+            </Grid>{" "}
+            <Grid item xs={1} >
+              {taskList.map(({ category }) => (
+                <Typography variant={"h5"} sx = {{my: 1}}>{category} </Typography>
+              ))}{" "}
             </Grid>
-            <Grid item xs={1}>
-              <Typography variant={"h5"}>Priority</Typography>
+            <Grid item xs={1} >
+              {taskList.map(({ due_date }) => (
+                <Typography variant={"h5"} sx = {{my: 1}}>{due_date} </Typography>
+              ))}{" "}
+            </Grid>
+            <Grid item xs={1} >
+              {taskList.map(({ priority }) => (
+                <Typography variant={"h5"} sx = {{my: 1}}>{priority} </Typography>
+              ))}{" "}
             </Grid>
           </Grid>
         </Stack>
@@ -345,25 +325,34 @@ function Panel(props) {
   );
 }
 
-// function DateTime(props) {
-
-//   return (
-//     <Stack textAlign={"center"} sx={{}}>
-//       <Typography>Date</Typography>
-//       <Typography>Time</Typography>
-//       <Typography>Due Today:</Typography>
-//     </Stack>
-//   );
-// }
-
 function Body(props) {
-  // console.log(props.tasks);
+  const [tasks, setTasks] = useState({});
+
+  const [isLoading, setLoading] = useState(true);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/tasks")
+      .then((res) => {
+        setTasks({ tasks: res.data });
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("Error from Dash Load");
+        console.log(err);
+      });
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // console.log(tasks);
 
   return (
     <Stack>
       <Grid container>
         <Grid item>
-          <Tasks  />
+          <Tasks tasks={tasks} />
         </Grid>
         <Grid item style={{ flex: 1 }}>
           <DateTime />
@@ -372,7 +361,7 @@ function Body(props) {
           <Schedule />
         </Grid>
       </Grid>
-      <Panel />
+      <Panel tasks={tasks} />
     </Stack>
   );
 }
@@ -392,7 +381,7 @@ function Dash(props) {
         console.log("Error from Dash Load");
         console.log(err);
       });
-  },[]);
+  }, []);
 
   if (isLoading) {
     return <div>Loading...</div>;
