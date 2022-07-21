@@ -359,6 +359,7 @@ function AddButton(props) {
       .catch(function (err) {
         console.log(err);
       });
+    setOpen(false);
   };
   const handleClickOpen = () => {
     setOpen(true);
