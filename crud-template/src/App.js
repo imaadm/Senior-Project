@@ -488,7 +488,7 @@ function EditButton(props) {
       <Button
         variant="contained"
         onClick={handleClickOpen}
-        size="medium"
+        size="small"
         color="secondary"
         sx={{ mx: 2 }}
       >
@@ -554,6 +554,19 @@ function EditButton(props) {
 function DeleteButton(props) {
   const [open, setOpen] = React.useState(false);
 
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .delete("http://localhost:5000/api/tasks/" + props.id)
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+    setOpen(false);
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -561,32 +574,26 @@ function DeleteButton(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
   return (
     <div>
       <Button
         variant="contained"
         onClick={handleClickOpen}
-        size="medium"
-        sx={{ mx: 2 }}
+        size="small"
         color="error"
+        sx={{ mx: 2 }}
       >
         Delete
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Delete Task</DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Task Name"
-            fullWidth
-            variant="standard"
-          />
+        <Typography>Are you sure you want to delete this task?</Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Ok</Button>
+          <Button onClick={handleSubmit}>Ok</Button>
         </DialogActions>
       </Dialog>
     </div>
