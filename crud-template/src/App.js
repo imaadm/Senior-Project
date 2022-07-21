@@ -336,19 +336,191 @@ function Panel(props) {
   );
 }
 
-function Buttons(props) {
+function AddButton(props) {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
-    <Stack direction={"row"} justifyContent="center" sx={{ mt: 2 }}>
-      <Button variant="contained" color="primary" size="large" sx={{ mx: 2 }}>
+    <div>
+      <Button
+        variant="contained"
+        onClick={handleClickOpen}
+        size="large"
+        sx={{ mx: 2 }}
+      >
         Add
       </Button>
-      <Button variant="contained" color="secondary" size="large" sx={{ mx: 2 }}>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Add Task</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Task Name"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="category"
+            label="Category"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="category"
+            fullWidth
+            type={"date"}
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="priority"
+            fullWidth
+            label="Priority"
+            type={"number"}
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Ok</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+}
+
+function EditButton(props) {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  return (
+    <div>
+      <Button
+        variant="contained"
+        onClick={handleClickOpen}
+        size="large"
+        sx={{ mx: 2 }}
+        color="secondary"
+      >
         Edit
       </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Edit Task</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Task Name"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="category"
+            label="Category"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="category"
+            fullWidth
+            type={"date"}
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="priority"
+            fullWidth
+            label="Priority"
+            type={"number"}
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Ok</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+}
 
-      <Button variant="contained" color="error" size="large" sx={{ mx: 2 }}>
+function DeleteButton(props) {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  return (
+    <div>
+      <Button
+        variant="contained"
+        onClick={handleClickOpen}
+        size="large"
+        sx={{ mx: 2 }}
+        color="error"
+      >
         Delete
       </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Delete Task</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Task Name"
+            fullWidth
+            variant="standard"
+          />
+          
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Ok</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+}
+
+function Buttons(props) {
+  return (
+    <Stack direction={"row"} justifyContent={"center"} sx={{mt: 2, ml:17}}>
+      <AddButton/>
+      <EditButton/>
+
+
+      <DeleteButton/>
+
     </Stack>
   );
 }
