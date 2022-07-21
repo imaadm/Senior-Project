@@ -82,14 +82,7 @@ function SideNav(props) {
           <Button size="medium" variant="outlined" startIcon={<BarChart />}>
             Dashboard
           </Button>
-          <Button
-            size="medium"
-            variant="outlined"
-            color="secondary"
-            startIcon={<Settings />}
-          >
-            Settings
-          </Button>{" "}
+
           <Button
             sx={{ flexGrow: 1 }}
             size="medium"
@@ -267,7 +260,9 @@ function Task(props) {
       {taskList.map(({ name, id, due_date }) => (
         <Stack direction={"row"} alignItems="center">
           <Checkbox size="small" />
-          <Typography variant="h6" key={id}>{name} </Typography>
+          <Typography variant="h6" key={id}>
+            {name}{" "}
+          </Typography>
         </Stack>
       ))}
     </Stack>
@@ -341,6 +336,23 @@ function Panel(props) {
   );
 }
 
+function Buttons(props) {
+  return (
+    <Stack direction={"row"} justifyContent="center" sx={{ mt: 2 }}>
+      <Button variant="contained" color="primary" size="large" sx={{ mx: 2 }}>
+        Add
+      </Button>
+      <Button variant="contained" color="secondary" size="large" sx={{ mx: 2 }}>
+        Edit
+      </Button>
+
+      <Button variant="contained" color="error" size="large" sx={{ mx: 2 }}>
+        Delete
+      </Button>
+    </Stack>
+  );
+}
+
 function Body(props) {
   const [tasks, setTasks] = useState({});
 
@@ -378,6 +390,7 @@ function Body(props) {
         </Grid>
       </Grid>
       <Panel tasks={tasks} />
+      <Buttons />
     </Stack>
   );
 }
