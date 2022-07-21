@@ -338,7 +338,28 @@ function Panel(props) {
 
 function AddButton(props) {
   const [open, setOpen] = React.useState(false);
+  const [task, setTask] = useState({
+    name: "",
+    category: "",
+    due_date: "",
+    priority: 0,
+  });
 
+  const handleChange = (event) => {
+    setTask({ ...task, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:5000/api/tasks", task)
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -346,6 +367,7 @@ function AddButton(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
   return (
     <div>
       <Button
@@ -362,40 +384,51 @@ function AddButton(props) {
           <TextField
             autoFocus
             margin="dense"
-            id="name"
             label="Task Name"
+            name="name"
             fullWidth
             variant="standard"
+            value={task.name}
+            onChange={handleChange}
+            required
           />
           <TextField
             autoFocus
             margin="dense"
-            id="category"
+            name="category"
             label="Category"
             fullWidth
             variant="standard"
+            value={task.category}
+            onChange={handleChange}
+            required
           />
           <TextField
             autoFocus
             margin="dense"
-            id="category"
+            name="due_date"
             fullWidth
             type={"date"}
             variant="standard"
+            value={task.due_date}
+            onChange={handleChange}
+            required
           />
           <TextField
             autoFocus
             margin="dense"
-            id="priority"
+            name="priority"
             fullWidth
             label="Priority"
             type={"number"}
             variant="standard"
+            onChange={handleChange}
+            required
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Ok</Button>
+          <Button onClick={handleSubmit}>Ok</Button>
         </DialogActions>
       </Dialog>
     </div>
@@ -501,7 +534,6 @@ function DeleteButton(props) {
             fullWidth
             variant="standard"
           />
-          
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
@@ -514,13 +546,11 @@ function DeleteButton(props) {
 
 function Buttons(props) {
   return (
-    <Stack direction={"row"} justifyContent={"center"} sx={{mt: 2, ml:17}}>
-      <AddButton/>
-      <EditButton/>
+    <Stack direction={"row"} justifyContent={"center"} sx={{ mt: 2, ml: 17 }}>
+      <AddButton />
+      <EditButton />
 
-
-      <DeleteButton/>
-
+      <DeleteButton />
     </Stack>
   );
 }
