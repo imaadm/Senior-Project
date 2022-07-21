@@ -98,6 +98,7 @@ function SideNav(props) {
   );
 }
 function Tasks(props) {
+  function clearTasks() {}
   return (
     <Card sx={{ minWidth: 350, mx: 5, mt: 5 }}>
       <CardContent>
@@ -111,13 +112,7 @@ function Tasks(props) {
         <Task tasks={props.tasks} />
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Fab
-          onClick={() => {
-            console.log("onClick");
-          }}
-          color="primary"
-          aria-label="clear"
-        >
+        <Fab onClick={clearTasks} color="primary" aria-label="clear">
           <CheckIcon />
         </Fab>
       </CardActions>
@@ -276,7 +271,7 @@ function Panel(props) {
     <CssBaseline>
       <Paper sx={{ mt: 6 }}>
         <Stack>
-          <Grid container textAlign={"center"} columns={4}>
+          <Grid container textAlign={"center"} columns={5}>
             <Grid item xs={1} sx={{ mb: 1 }}>
               <Typography textAlign={"center"} variant={"h4"}>
                 Name
@@ -298,6 +293,12 @@ function Panel(props) {
             <Grid item xs={1} sx={{ mb: 1 }}>
               <Typography textAlign={"center"} variant={"h4"}>
                 Priority
+              </Typography>
+              <Divider />
+            </Grid>{" "}
+            <Grid item xs={1} sx={{ mb: 1 }}>
+              <Typography textAlign={"center"} variant={"h4"}>
+                Actions
               </Typography>
               <Divider />
             </Grid>
@@ -325,8 +326,21 @@ function Panel(props) {
             <Grid item xs={1}>
               {taskList.map(({ priority }) => (
                 <Typography variant={"h5"} sx={{ my: 1 }}>
-                  {priority}{" "}
+                  {priority}
                 </Typography>
+              ))}
+            </Grid>{" "}
+            <Grid item xs={1}>
+              {taskList.map(({ _id }) => (
+                <Stack
+                  direction={"row"}
+                  justifyContent={"center"}
+                  sx={{ my: 2,}}
+                >
+                  <Typography>{_id}</Typography>
+                  <EditButton id={_id} />
+                  <DeleteButton id={_id} />
+                </Stack>
               ))}{" "}
             </Grid>
           </Grid>
@@ -377,7 +391,7 @@ function AddButton(props) {
         size="large"
         sx={{ mx: 2 }}
       >
-        Add
+        Add Task
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add Task</DialogTitle>
@@ -438,7 +452,29 @@ function AddButton(props) {
 
 function EditButton(props) {
   const [open, setOpen] = React.useState(false);
+  const [task, setTask] = useState({
+    name: "",
+    category: "",
+    due_date: "",
+    priority: 0,
+  });
 
+  const handleChange = (event) => {
+    setTask({ ...task, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .put("http://localhost:5000/api/tasks/" + props.id, task)
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+    setOpen(false);
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -446,14 +482,15 @@ function EditButton(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
   return (
     <div>
       <Button
         variant="contained"
         onClick={handleClickOpen}
-        size="large"
-        sx={{ mx: 2 }}
+        size="medium"
         color="secondary"
+        sx={{ mx: 2 }}
       >
         Edit
       </Button>
@@ -463,40 +500,51 @@ function EditButton(props) {
           <TextField
             autoFocus
             margin="dense"
-            id="name"
             label="Task Name"
+            name="name"
             fullWidth
             variant="standard"
+            value={task.name}
+            onChange={handleChange}
+            required
           />
           <TextField
             autoFocus
             margin="dense"
-            id="category"
+            name="category"
             label="Category"
             fullWidth
             variant="standard"
+            value={task.category}
+            onChange={handleChange}
+            required
           />
           <TextField
             autoFocus
             margin="dense"
-            id="category"
+            name="due_date"
             fullWidth
             type={"date"}
             variant="standard"
+            value={task.due_date}
+            onChange={handleChange}
+            required
           />
           <TextField
             autoFocus
             margin="dense"
-            id="priority"
+            name="priority"
             fullWidth
             label="Priority"
             type={"number"}
             variant="standard"
+            onChange={handleChange}
+            required
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Ok</Button>
+          <Button onClick={handleSubmit}>Ok</Button>
         </DialogActions>
       </Dialog>
     </div>
@@ -518,7 +566,7 @@ function DeleteButton(props) {
       <Button
         variant="contained"
         onClick={handleClickOpen}
-        size="large"
+        size="medium"
         sx={{ mx: 2 }}
         color="error"
       >
@@ -549,9 +597,8 @@ function Buttons(props) {
   return (
     <Stack direction={"row"} justifyContent={"center"} sx={{ mt: 2, ml: 17 }}>
       <AddButton />
-      <EditButton />
-
-      <DeleteButton />
+      {/* <EditButton />
+      <DeleteButton /> */}
     </Stack>
   );
 }
