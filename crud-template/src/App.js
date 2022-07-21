@@ -60,15 +60,13 @@ import axios from "axios";
 
 function Bar(props) {
   return (
-    <CssBaseline>
-      <AppBar>
-        <Toolbar>
-          <Typography ml={23} variant="h5" sx={{ flexGrow: 1 }}>
-            Task Manager
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </CssBaseline>
+    <AppBar>
+      <Toolbar>
+        <Typography ml={23} variant="h5" sx={{ flexGrow: 1 }}>
+          Task Manager
+        </Typography>
+      </Toolbar>
+    </AppBar>
   );
 }
 
@@ -150,7 +148,7 @@ function CalGrid(props) {
   return (
     <Grid
       container
-      sx={{ width: 300, height: 270, py: 2, pl: 5 }}
+      sx={{ width: 350, height: 300, py: 2, pl: 5 }}
       spacing={0}
       columns={7}
     >
@@ -245,7 +243,7 @@ function CalGrid(props) {
 function Schedule(props) {
   return (
     <Container sx={{ mt: 4, mr: 15 }}>
-      <Paper sx={{ width: 325, height: 305 }} elevation={3}>
+      <Paper sx={{ width: 375, height: 325 }} elevation={3}>
         <Typography
           sx={{ pt: 2 }}
           variant="subtitle2"
@@ -269,8 +267,7 @@ function Task(props) {
       {taskList.map(({ name, id, due_date }) => (
         <Stack direction={"row"} alignItems="center">
           <Checkbox size="small" />
-          <Typography key={id}>{name} </Typography>
-          <Typography flexGrow={1}>{due_date} </Typography>
+          <Typography variant="h6" key={id}>{name} </Typography>
         </Stack>
       ))}
     </Stack>
@@ -282,40 +279,59 @@ function Panel(props) {
 
   return (
     <CssBaseline>
-      <Paper sx={{ pl: 1, mt: 6 }}>
+      <Paper sx={{ mt: 6 }}>
         <Stack>
-          <Typography variant={"h3"} sx={{mb: 1}}>Tasks</Typography>
-          <Grid container columns={4} >
-            <Grid item xs={1} sx={{mb: 1}}>
-              <Typography variant={"h4"}>Name</Typography>
+          <Grid container textAlign={"center"} columns={4}>
+            <Grid item xs={1} sx={{ mb: 1 }}>
+              <Typography textAlign={"center"} variant={"h4"}>
+                Name
+              </Typography>{" "}
+              <Divider />
             </Grid>
-            <Grid item xs={1} sx={{mb: 1}}>
-              <Typography variant={"h4"}>Category</Typography>
+            <Grid item xs={1} sx={{ mb: 1 }}>
+              <Typography textAlign={"center"} variant={"h4"}>
+                Category
+              </Typography>{" "}
+              <Divider />
             </Grid>
-            <Grid item xs={1} sx={{mb: 1}}>
-              <Typography variant={"h4"}>Due Date</Typography>
+            <Grid item xs={1} sx={{ mb: 1 }}>
+              <Typography textAlign={"center"} variant={"h4"}>
+                Due Date
+              </Typography>{" "}
+              <Divider />
             </Grid>
-            <Grid item xs={1} sx={{mb: 1}}>
-              <Typography variant={"h4"}>Priority</Typography>
-            </Grid>{" "}
-            <Grid item xs={1} >
+            <Grid item xs={1} sx={{ mb: 1 }}>
+              <Typography textAlign={"center"} variant={"h4"}>
+                Priority
+              </Typography>
+              <Divider />
+            </Grid>
+            <Grid item xs={1}>
               {taskList.map(({ name }) => (
-                <Typography variant={"h5"} sx = {{my: 1}}>{name} </Typography>
-              ))}{" "}
-            </Grid>{" "}
-            <Grid item xs={1} >
+                <Typography variant={"h5"} sx={{ my: 1 }}>
+                  {name}
+                </Typography>
+              ))}
+            </Grid>
+            <Grid item xs={1}>
               {taskList.map(({ category }) => (
-                <Typography variant={"h5"} sx = {{my: 1}}>{category} </Typography>
-              ))}{" "}
+                <Typography variant={"h5"} sx={{ my: 1 }}>
+                  {category}
+                </Typography>
+              ))}
             </Grid>
-            <Grid item xs={1} >
+            <Grid item xs={1}>
               {taskList.map(({ due_date }) => (
-                <Typography variant={"h5"} sx = {{my: 1}}>{due_date} </Typography>
-              ))}{" "}
+                <Typography variant={"h5"} sx={{ my: 1 }}>
+                  {due_date}
+                </Typography>
+              ))}
             </Grid>
-            <Grid item xs={1} >
+            <Grid item xs={1}>
               {taskList.map(({ priority }) => (
-                <Typography variant={"h5"} sx = {{my: 1}}>{priority} </Typography>
+                <Typography variant={"h5"} sx={{ my: 1 }}>
+                  {priority}{" "}
+                </Typography>
               ))}{" "}
             </Grid>
           </Grid>
@@ -350,7 +366,7 @@ function Body(props) {
 
   return (
     <Stack>
-      <Grid container>
+      <Grid container sx={{ ml: 17 }}>
         <Grid item>
           <Tasks tasks={tasks} />
         </Grid>
@@ -392,12 +408,9 @@ function Dash(props) {
   return (
     <Box>
       <SideNav />
-      <Container sx={{ ml: 18, mt: 8 }} maxWidth={false}>
+      <Container sx={{ mt: 8 }} maxWidth={false}>
         <Bar />
         <Body tasks={tasks} />
-        <Stack direction={"row"} sx={{ ml: 2, mt: 5 }}>
-          <CreateTask />
-        </Stack>
       </Container>
     </Box>
   );
