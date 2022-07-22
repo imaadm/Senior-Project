@@ -14,8 +14,13 @@ router.get("/test", (req, res) => res.send("task route testing!"));
 // @route GET api/tasks
 // @description Get all tasks
 // @access Public
-router.get("/", (req, res) => {
-  Task.find()
+// router.get("/", (req, res) => {
+//   Task.find()
+//     .then((tasks) => res.json(tasks))
+//     .catch((err) => res.status(404).json({ notasksfound: "No Tasks found" }));
+// });
+router.get("/:key", (req, res) => {
+  Task.find({ key: { $in: req.params.key } })
     .then((tasks) => res.json(tasks))
     .catch((err) => res.status(404).json({ notasksfound: "No Tasks found" }));
 });
@@ -29,8 +34,6 @@ router.get("/:id", (req, res) => {
     .catch((err) => res.status(404).json({ notaskfound: "No Task found" }));
 });
 
-
-
 // @route POST api/tasks
 // @description add/save task
 // @access Public
@@ -39,7 +42,6 @@ router.post("/", (req, res) => {
     .then((task) => res.json({ msg: "Task added successfully" }))
     .catch((err) => res.status(400).json({ error: "Unable to add this task" }));
 });
-
 
 // @route GET api/tasks/:id
 // @description Update task

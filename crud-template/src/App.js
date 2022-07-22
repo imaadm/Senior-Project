@@ -637,7 +637,7 @@ function Body(props) {
   const [isLoading, setLoading] = useState(true);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/tasks")
+      .get("http://localhost:5000/api/tasks/" + localStorage.getItem("userInfo"))
       .then((res) => {
         setTasks({ tasks: res.data });
         setLoading(false);
@@ -674,34 +674,13 @@ function Body(props) {
 }
 
 function Dash(props) {
-  const [tasks, setTasks] = useState({});
-
-  const [isLoading, setLoading] = useState(true);
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/tasks")
-      .then((res) => {
-        setTasks({ tasks: res.data });
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log("Error from Dash Load");
-        console.log(err);
-      });
-  }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  // console.log(tasks);
 
   return (
     <Box>
       <SideNav />
       <Container sx={{ mt: 8 }} maxWidth={false}>
         <Bar />
-        <Body tasks={tasks} />
+        <Body />
       </Container>
     </Box>
   );

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
+import { Alert } from "@mui/material";
 const theme = createTheme();
 
 function Copyright(props) {
@@ -22,12 +23,7 @@ function Copyright(props) {
       align="center"
       {...props}
     >
-      {"Copyright © "}
-      {/* <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "} */}
-      {new Date().getFullYear()}
-      {"."}
+      by Imaad Mohammed
     </Typography>
   );
 }
@@ -53,7 +49,7 @@ class SignUp extends Component {
 
     axios
       .post("http://localhost:5000/api/users", data)
-      .then(res => {
+      .then((res) => {
         this.setState({
           username: "",
           password: "",
@@ -62,6 +58,7 @@ class SignUp extends Component {
       .catch((err) => {
         console.log("Error in CreateUser!");
         console.log(err);
+        alert("Error! Account not created");
       });
   };
 
@@ -132,6 +129,9 @@ class SignUp extends Component {
                 sx={{ mt: 3, mb: 2 }}
               >
                 Create Account
+              </Button>
+              <Button href="/login" fullWidth variant="contained">
+                Return to Login
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
