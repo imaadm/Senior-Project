@@ -45,9 +45,8 @@ import { Box, Container } from "@mui/system";
 import { CssBaseline } from "@mui/material";
 import React from "react";
 // We use Route in order to define the different routes of our application
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import CreateTask from "./components/CreateTask";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -71,6 +70,13 @@ function Bar(props) {
 }
 
 function SideNav(props) {
+  let navigate = useNavigate();
+  function onExit() {
+    localStorage.setItem("userInfo", "");
+    localStorage.setItem("isAuthenticated", false);
+
+    navigate("/login", { replace: true });
+  }
   return (
     <Drawer variant="permanent">
       <Box p={2} textAlign="center">
@@ -89,6 +95,7 @@ function SideNav(props) {
             variant="outlined"
             color="error"
             startIcon={<CloseIcon />}
+            onClick={onExit}
           >
             Sign Out
           </Button>
@@ -349,7 +356,7 @@ function Panel(props) {
                 <Stack
                   direction={"row"}
                   justifyContent={"center"}
-                  sx={{ my: 2 }}
+                  sx={{ my: 1 }}
                 >
                   <EditButton id={_id} />
                   <DeleteButton id={_id} />
@@ -365,11 +372,13 @@ function Panel(props) {
 
 function AddButton(props) {
   const [open, setOpen] = React.useState(false);
+
   const [task, setTask] = useState({
     name: "",
     category: "",
     due_date: "",
     priority: 0,
+    key: localStorage.getItem("userInfo")
   });
 
   const handleChange = (event) => {

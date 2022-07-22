@@ -17,9 +17,10 @@ const TaskSchema = new mongoose.Schema({
   priority: {
     type: Number,
   },
-  id: {
+  key: {
     type: String,
-  },
+  }
+
 });
 
 module.exports = Task = mongoose.model("Task", TaskSchema);
