@@ -247,16 +247,25 @@ function Schedule(props) {
 }
 
 function Task(props) {
-  console.log(props.tasks);
+  const [isChecked, setIsChecked] = useState(false);
+  const [idList, setIdList] = useState("");
+
   let taskList = props.tasks.tasks;
 
   return (
     <Stack direction={"column"}>
-      {taskList.map(({ name, id, due_date }) => (
-        <Stack direction={"row"} alignItems="center">
-          <Checkbox size="small" />
-          <Typography variant="h6" key={id}>
-            {name}{" "}
+      {taskList.map(({ name, _id }) => (
+        <Stack direction={"row"} alignItems="center" id={_id}>
+          <Checkbox
+            size="small"
+            onClick={function taskClick() {
+              setIsChecked(!isChecked);
+              console.log({ _id });
+              setIdList(idList.concat({ _id }));
+            }}
+          />
+          <Typography variant="h6" key={_id}>
+            {name}
           </Typography>
         </Stack>
       ))}
@@ -266,6 +275,11 @@ function Task(props) {
 
 function Panel(props) {
   let taskList = props.tasks.tasks;
+  for (let i = 0; i < taskList.length; i++) {
+    taskList[i].due_date = taskList[i].due_date.substring(0, 10);
+  }
+
+  function convert() {}
 
   return (
     <CssBaseline>
@@ -335,9 +349,8 @@ function Panel(props) {
                 <Stack
                   direction={"row"}
                   justifyContent={"center"}
-                  sx={{ my: 2,}}
+                  sx={{ my: 2 }}
                 >
-                  <Typography>{_id}</Typography>
                   <EditButton id={_id} />
                   <DeleteButton id={_id} />
                 </Stack>
@@ -367,9 +380,7 @@ function AddButton(props) {
     e.preventDefault();
     axios
       .post("http://localhost:5000/api/tasks", task)
-      .then(function (res) {
-        console.log(res);
-      })
+      .then(function (res) {})
       .catch(function (err) {
         console.log(err);
       });
@@ -453,10 +464,10 @@ function AddButton(props) {
 function EditButton(props) {
   const [open, setOpen] = React.useState(false);
   const [task, setTask] = useState({
-    name: "",
-    category: "",
-    due_date: "",
-    priority: 0,
+    name: props.name,
+    category: props.category,
+    due_date: props.due_date,
+    priority: props.priority,
   });
 
   const handleChange = (event) => {
@@ -467,9 +478,7 @@ function EditButton(props) {
     e.preventDefault();
     axios
       .put("http://localhost:5000/api/tasks/" + props.id, task)
-      .then(function (res) {
-        console.log(res);
-      })
+      .then(function (res) {})
       .catch(function (err) {
         console.log(err);
       });
@@ -554,14 +563,11 @@ function EditButton(props) {
 function DeleteButton(props) {
   const [open, setOpen] = React.useState(false);
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .delete("http://localhost:5000/api/tasks/" + props.id)
-      .then(function (res) {
-        console.log(res);
-      })
+      .then(function (res) {})
       .catch(function (err) {
         console.log(err);
       });
@@ -589,7 +595,7 @@ function DeleteButton(props) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Delete Task</DialogTitle>
         <DialogContent>
-        <Typography>Are you sure you want to delete this task?</Typography>
+          <Typography>Are you sure you want to delete this task?</Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

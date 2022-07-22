@@ -29,6 +29,12 @@ router.get('/:id', (req, res) => {
     .catch(err => res.status(404).json({ notaskfound: 'No Task found' }));
 });
 
+router.get('/:id/:id', (req, res) => {
+  Task.findById(req.params.id)
+    .then(task => res.json(task))
+    .catch(err => res.status(404).json({ notaskfound: 'No Task found' }));
+});
+
 // @route POST api/tasks
 // @description add/save task
 // @access Public
