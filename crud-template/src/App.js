@@ -2,22 +2,13 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import {
-  AccountCircle,
-  BarChart,
-  Settings,
-  Menu,
-  Add,
-  Remove,
-} from "@mui/icons-material";
+import { BarChart } from "@mui/icons-material";
 import CheckIcon from "@mui/icons-material/Check";
-import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import {
   AppBar,
   Divider,
   Drawer,
-  IconButton,
   Stack,
   Toolbar,
   Typography,
@@ -26,16 +17,10 @@ import {
   CardContent,
   CardActions,
   Checkbox,
-  SpeedDial,
-  SpeedDialIcon,
-  SpeedDialAction,
   Paper,
-  Tabs,
-  TabPanel,
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   TextField,
   DialogActions,
   Fab,
@@ -45,11 +30,10 @@ import { Box, Container } from "@mui/system";
 import { CssBaseline } from "@mui/material";
 import React from "react";
 // We use Route in order to define the different routes of our application
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import ProtectedRoute from "./components/ProtectedRoute";
 import DateTime from "./components/DateTime";
 import axios from "axios";
 
@@ -258,7 +242,12 @@ function Task(props) {
   const [idList, setIdList] = useState("");
 
   let taskList = props.tasks.tasks;
+  taskList.sort(function (a, b) {
+    const date1 = new Date(a.due_date);
+    const date2 = new Date(b.due_date);
 
+    return date1 - date2;
+  });
   return (
     <Stack direction={"column"}>
       {taskList.map(({ name, _id }) => (
@@ -282,12 +271,12 @@ function Task(props) {
 
 function Panel(props) {
   let taskList = props.tasks.tasks;
-  taskList.sort(function(a, b){
-    const date1 = new Date(a.due_date)
-    const date2 = new Date(b.due_date)
-    
+  taskList.sort(function (a, b) {
+    const date1 = new Date(a.due_date);
+    const date2 = new Date(b.due_date);
+
     return date1 - date2;
-})
+  });
   // console.log(taskList);
 
   for (let i = 0; i < taskList.length; i++) {
@@ -395,7 +384,9 @@ function AddButton(props) {
     e.preventDefault();
     axios
       .post("http://localhost:5000/api/tasks", task)
-      .then(function (res) {})
+      .then(function (res) {
+        window.location.reload();
+      })
       .catch(function (err) {
         console.log(err);
       });
@@ -493,7 +484,9 @@ function EditButton(props) {
     e.preventDefault();
     axios
       .put("http://localhost:5000/api/tasks/" + props.id, task)
-      .then(function (res) {})
+      .then(function (res) {
+        window.location.reload();
+      })
       .catch(function (err) {
         console.log(err);
       });
@@ -582,7 +575,9 @@ function DeleteButton(props) {
     e.preventDefault();
     axios
       .delete("http://localhost:5000/api/tasks/" + props.id)
-      .then(function (res) {})
+      .then(function (res) {
+        window.location.reload();
+      })
       .catch(function (err) {
         console.log(err);
       });
@@ -637,7 +632,9 @@ function Body(props) {
   const [isLoading, setLoading] = useState(true);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/tasks/" + localStorage.getItem("userInfo"))
+      .get(
+        "http://localhost:5000/api/tasks/" + localStorage.getItem("userInfo")
+      )
       .then((res) => {
         setTasks({ tasks: res.data });
         setLoading(false);
@@ -674,7 +671,6 @@ function Body(props) {
 }
 
 function Dash(props) {
-
   return (
     <Box>
       <SideNav />
