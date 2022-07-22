@@ -282,11 +282,17 @@ function Task(props) {
 
 function Panel(props) {
   let taskList = props.tasks.tasks;
+  taskList.sort(function(a, b){
+    const date1 = new Date(a.due_date)
+    const date2 = new Date(b.due_date)
+    
+    return date1 - date2;
+})
+  // console.log(taskList);
+
   for (let i = 0; i < taskList.length; i++) {
     taskList[i].due_date = taskList[i].due_date.substring(0, 10);
   }
-
-  function convert() {}
 
   return (
     <CssBaseline>
@@ -378,7 +384,7 @@ function AddButton(props) {
     category: "",
     due_date: "",
     priority: 0,
-    key: localStorage.getItem("userInfo")
+    key: localStorage.getItem("userInfo"),
   });
 
   const handleChange = (event) => {
