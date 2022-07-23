@@ -52,7 +52,7 @@ function Bar(props) {
   return (
     <AppBar>
       <Toolbar>
-        <Typography  variant="h5" sx={{ flexGrow: 1 }}>
+        <Typography variant="h5" sx={{ flexGrow: 1 }}>
           Task Manager
         </Typography>
         <Button
@@ -60,7 +60,7 @@ function Bar(props) {
           variant="filled"
           color="error"
           startIcon={<CloseIcon />}
-          onClick={{onExit}}
+          onClick={{ onExit }}
         >
           Sign Out
         </Button>
@@ -105,7 +105,6 @@ function SideNav(props) {
   );
 }
 function Tasks(props) {
-  function clearTasks() {}
   return (
     <Card sx={{ minWidth: 350, mx: 5, mt: 5 }}>
       <CardContent>
@@ -120,45 +119,74 @@ function Tasks(props) {
           <Task tasks={props.tasks} />{" "}
         </Stack>
       </CardContent>
-      {/* <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Fab onClick={clearTasks} color="primary" aria-label="clear">
-          <CheckIcon />
-        </Fab>
-      </CardActions> */}
     </Card>
   );
 }
 function Task(props) {
-  // const [isChecked, setIsChecked] = useState(false);
-  // const [idList, setIdList] = useState("");
-
-  let taskList = props.tasks.tasks;
+  let hasTask = [];
+  let taskList = [...props.tasks.tasks];
   taskList.sort(function (a, b) {
     const date1 = new Date(a.due_date);
     const date2 = new Date(b.due_date);
 
     return date1 - date2;
   });
+  let currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+  for (let i = 0; i < 28; i++) {
+    if (taskList[i]) {
+      let taskDay = new Date(taskList[i].due_date);
+      const diffTime = Math.abs(currentDate - taskDay);
+      const diffDays = Math.ceil(diffTime / (1000 * 3600 * 24));
+      if (diffDays > 0 && diffDays < 29) hasTask.push(diffDays);
+    }
+  }
+
+  for (let i = 0; i < taskList.length; i++){
+    if (hasTask[i] > 10 || hasTask[i] < 0)
+    taskList.splice(i,1)
+  }
+
   return (
     <Stack direction={"column"}>
-      {taskList.map(({ name, _id }) => (
-        <Stack direction={"row"} alignItems="center" id={_id}>
-          {/* <Checkbox
-            size="small"
-            onClick={function taskClick() {
-              setIsChecked(!isChecked);
-              console.log({ _id });
-              setIdList(idList.concat({ _id }));
-            }}
-          /> */}
-          <Typography variant="h6" key={_id}>
-            {name}
-          </Typography>{" "}
-          <Typography variant="h6">Due in</Typography>
+      {taskList.map(({ name, _id }, index) => (
+        <Stack direction={"row"} id={_id}>
+          <Grid container columns={2}>
+            <Grid item>
+              <Container>
+                <Typography variant="h6" key={_id}>
+                  {name}
+                </Typography>
+              </Container>
+            </Grid>
+            <Grid item>
+              <Container>
+                <DueIn variant="h6" days={hasTask[index]}></DueIn>
+              </Container>
+            </Grid>
+          </Grid>
         </Stack>
       ))}
     </Stack>
   );
+  function DueIn(props) {
+    if (props.days === 1)
+      return (
+        <Typography variant="h6" color={"crimson"}>
+          {" "}
+          Due in: {props.days} Day
+        </Typography>
+      );
+    if (props.days <= 3)
+      return (
+        <Typography variant="h6" color={"crimson"}>
+          {" "}
+          Due in: {props.days} Days
+        </Typography>
+      );
+    else
+      return <Typography variant="h6"> Due in: {props.days} Days</Typography>;
+  }
 }
 function CalCard(props) {
   let color = "lightblue";
@@ -290,7 +318,7 @@ function CalGrid(props) {
 
 function Schedule(props) {
   return (
-    <Container sx={{ mt: 4, }}>
+    <Container sx={{ mt: 4 }}>
       <Paper sx={{ width: 375, height: 325 }} elevation={3}>
         <Typography
           sx={{ pt: 2 }}
@@ -655,7 +683,7 @@ function DeleteButton(props) {
 
 function Buttons(props) {
   return (
-    <Stack direction={"row"} justifyContent={"center"} sx={{ mt: 2,}}>
+    <Stack direction={"row"} justifyContent={"center"} sx={{ mt: 2 }}>
       <AddButton />
       {/* <EditButton />
       <DeleteButton /> */}
@@ -690,7 +718,7 @@ function Body(props) {
 
   return (
     <Stack>
-      <Grid container >
+      <Grid container>
         <Grid item>
           <Tasks tasks={tasks} />
         </Grid>
