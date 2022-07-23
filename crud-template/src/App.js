@@ -112,18 +112,51 @@ function Tasks(props) {
 }
 
 function CalCard(props) {
+  let color = "lightblue";
+  console.log(props.hasTask);
+  // console.log(props.id);
+  if (props.id === 0)
+  color = "lightgreen";
+  for (let i = 0; i < props.hasTask.length; i++){
+  if (props.hasTask[i] === props.id) {
+    color = "tomato";
+
+  }
+}
+
   return (
     <Card
-      sx={{ width: 25, height: 25 }}
-      style={{ backgroundColor: "lightblue" }}
-      onClick={() => {
-        alert("✔️ This works on every component!");
-      }}
+      sx={{ width: 25, height: 25, backgroundColor: color }}
+      onClick={() => {}}
     ></Card>
   );
 }
 
 function CalGrid(props) {
+  let hasTask = [];
+  let taskList = props.tasks.tasks;
+  taskList.sort(function (a, b) {
+    const date1 = new Date(a.due_date);
+    const date2 = new Date(b.due_date);
+
+    return date1 - date2;
+  });
+  let currentDate = new Date();
+  currentDate.setHours(0,0,0,0)
+  for (let i = 0; i < 28; i++) {
+    if (taskList[i]) {
+      let taskDay = new Date(taskList[i].due_date);
+      const diffTime = Math.abs(currentDate - taskDay);
+      const diffDays = Math.ceil(diffTime / (1000 * 3600 * 24));
+      if (diffDays > 0 && diffDays < 29) {
+        hasTask.push(diffDays);
+      } else hasTask.push(-1);
+    }
+  }
+  for (let i = 0; i < hasTask.length; i++) {}
+  console.log(currentDate.getDate());
+  console.log(hasTask);
+
   return (
     <Grid
       container
@@ -132,88 +165,88 @@ function CalGrid(props) {
       columns={7}
     >
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={0} hasTask={hasTask}  />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={1} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={2} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={3} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={4} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={5} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={6} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={7} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={8} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={9} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={10} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={11} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={12} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={13} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={14} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={15} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={16} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={17} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={18} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={19} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={20} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={21} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={22} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
-      </Grid>{" "}
-      <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={23} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={24} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={25} hasTask={hasTask} />
       </Grid>
       <Grid item xs={1}>
-        <CalCard />
+        <CalCard id={26} hasTask={hasTask} />
+      </Grid>
+      <Grid item xs={1}>
+        <CalCard id={27} hasTask={hasTask} />
       </Grid>
     </Grid>
   );
@@ -231,7 +264,7 @@ function Schedule(props) {
         >
           Calendar
         </Typography>
-        <CalGrid />
+        <CalGrid tasks={props.tasks} />
       </Paper>
     </Container>
   );
@@ -661,7 +694,7 @@ function Body(props) {
           <DateTime />
         </Grid>
         <Grid item>
-          <Schedule />
+          <Schedule tasks={tasks} />
         </Grid>
       </Grid>
       <Panel tasks={tasks} />
