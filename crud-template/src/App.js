@@ -2,28 +2,23 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { BarChart } from "@mui/icons-material";
-import CheckIcon from "@mui/icons-material/Check";
+
 import CloseIcon from "@mui/icons-material/Close";
 import {
   AppBar,
   Divider,
-  Drawer,
   Stack,
   Toolbar,
   Typography,
   Grid,
   Card,
   CardContent,
-  CardActions,
-  Checkbox,
   Paper,
   Dialog,
   DialogTitle,
   DialogContent,
   TextField,
   DialogActions,
-  Fab,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import { Box, Container } from "@mui/system";
@@ -43,12 +38,12 @@ import axios from "axios";
 
 function Bar(props) {
   let navigate = useNavigate();
-  function onExit() {
+  const onExit = () => {
     localStorage.setItem("userInfo", "");
     localStorage.setItem("isAuthenticated", false);
 
-    navigate("/login", { replace: true });
-  }
+    navigate("/login");
+  };
   return (
     <AppBar>
       <Toolbar>
@@ -60,7 +55,7 @@ function Bar(props) {
           variant="filled"
           color="error"
           startIcon={<CloseIcon />}
-          onClick={{ onExit }}
+          onClick={onExit}
         >
           Sign Out
         </Button>
@@ -69,41 +64,41 @@ function Bar(props) {
   );
 }
 
-function SideNav(props) {
-  let navigate = useNavigate();
-  function onExit() {
-    localStorage.setItem("userInfo", "");
-    localStorage.setItem("isAuthenticated", false);
+// function SideNav(props) {
+//   let navigate = useNavigate();
+//   function onExit() {
+//     localStorage.setItem("userInfo", "");
+//     localStorage.setItem("isAuthenticated", false);
 
-    navigate("/login", { replace: true });
-  }
-  return (
-    <Drawer variant="permanent">
-      <Box p={2} textAlign="center">
-        <Typography p={1} variant="h5">
-          Navigation
-        </Typography>
-        <Divider variant="middle" />
-        <Stack mt={2} spacing={2}>
-          <Button size="medium" variant="outlined" startIcon={<BarChart />}>
-            Dashboard
-          </Button>
+//     navigate("/login", { replace: true });
+//   }
+//   return (
+//     <Drawer variant="permanent">
+//       <Box p={2} textAlign="center">
+//         <Typography p={1} variant="h5">
+//           Navigation
+//         </Typography>
+//         <Divider variant="middle" />
+//         <Stack mt={2} spacing={2}>
+//           <Button size="medium" variant="outlined" startIcon={<BarChart />}>
+//             Dashboard
+//           </Button>
 
-          <Button
-            sx={{ flexGrow: 1 }}
-            size="medium"
-            variant="outlined"
-            color="error"
-            startIcon={<CloseIcon />}
-            onClick={onExit}
-          >
-            Sign Out
-          </Button>
-        </Stack>
-      </Box>
-    </Drawer>
-  );
-}
+//           <Button
+//             sx={{ flexGrow: 1 }}
+//             size="medium"
+//             variant="outlined"
+//             color="error"
+//             startIcon={<CloseIcon />}
+//             onClick={onExit}
+//           >
+//             Sign Out
+//           </Button>
+//         </Stack>
+//       </Box>
+//     </Drawer>
+//   );
+// }
 function Tasks(props) {
   return (
     <Card sx={{ minWidth: 350, mx: 5, mt: 5 }}>
@@ -136,15 +131,20 @@ function Task(props) {
   for (let i = 0; i < 28; i++) {
     if (taskList[i]) {
       let taskDay = new Date(taskList[i].due_date);
+      // if (currentDate > taskDay) {
+      //   hasTask.push(-1);
+      // } else {
       const diffTime = Math.abs(currentDate - taskDay);
+
       const diffDays = Math.ceil(diffTime / (1000 * 3600 * 24));
       if (diffDays > 0 && diffDays < 29) hasTask.push(diffDays);
+      // }
+      console.log(hasTask[i]);
     }
   }
 
-  for (let i = 0; i < taskList.length; i++){
-    if (hasTask[i] > 10 || hasTask[i] < 0)
-    taskList.splice(i,1)
+  for (let i = 0; i < taskList.length; i++) {
+    if (hasTask[i] > 10 || hasTask[i] < 0) taskList.splice(i, 1);
   }
 
   return (
@@ -170,6 +170,13 @@ function Task(props) {
     </Stack>
   );
   function DueIn(props) {
+    if (props.days < 0)
+      return (
+        <Typography variant="h6" color={"crimson"}>
+          {" "}
+          Overdue!
+        </Typography>
+      );
     if (props.days === 1)
       return (
         <Typography variant="h6" color={"crimson"}>
@@ -435,9 +442,9 @@ function AddButton(props) {
 
   const [task, setTask] = useState({
     name: "",
-    category: "",
+    category: "None",
     due_date: "",
-    priority: 0,
+    priority: 5,
     key: localStorage.getItem("userInfo"),
   });
 
@@ -485,7 +492,6 @@ function AddButton(props) {
             name="name"
             fullWidth
             variant="standard"
-            value={task.name}
             onChange={handleChange}
             required
           />
@@ -496,7 +502,6 @@ function AddButton(props) {
             label="Category"
             fullWidth
             variant="standard"
-            value={task.category}
             onChange={handleChange}
             required
           />
@@ -507,7 +512,6 @@ function AddButton(props) {
             fullWidth
             type={"date"}
             variant="standard"
-            value={task.due_date}
             onChange={handleChange}
             required
           />
@@ -518,6 +522,8 @@ function AddButton(props) {
             fullWidth
             label="Priority"
             type={"number"}
+            min="0"
+            max="10"
             variant="standard"
             onChange={handleChange}
             required
@@ -619,6 +625,8 @@ function EditButton(props) {
             fullWidth
             label="Priority"
             type={"number"}
+            min="0"
+            max="10"
             variant="standard"
             onChange={handleChange}
             required
@@ -681,12 +689,60 @@ function DeleteButton(props) {
   );
 }
 
+// function SortButton(props) {
+//   const [open, setOpen] = React.useState(false);
+//   let taskList = props.tasks.tasks;
+
+//   const handleClickOpen = () => {
+//     setOpen(true);
+//   };
+
+//   const handleClose = () => {
+//     setOpen(false);
+//   };
+//   function sortName() {}
+//   function sortPriority() {
+//     taskList.sort(function (a, b) {
+//       const date1 = new Date(a.due_date);
+//       const date2 = new Date(b.due_date);
+
+//       return date1 - date2;
+//     });
+
+//     setOpen(false);
+//     window.location.reload();
+//   }
+
+//   return (
+//     <div>
+//       <Button
+//         variant="contained"
+//         onClick={handleClickOpen}
+//         size="large"
+//         sx={{ mx: 2 }}
+//         color="success"
+//       >
+//         Sort
+//       </Button>
+//       <Dialog open={open} onClose={handleClose}>
+//         <DialogTitle>Sort By:</DialogTitle>
+
+//         <DialogActions>
+//           <Button onClick={handleClose}>Name</Button>
+//           <Button onClick={handleClose}>Category</Button>{" "}
+//           <Button onClick={handleClose}>Due Date</Button>
+//           <Button onClick={sortPriority}>Priority</Button>
+//         </DialogActions>
+//       </Dialog>
+//     </div>
+//   );
+// }
+
 function Buttons(props) {
   return (
     <Stack direction={"row"} justifyContent={"center"} sx={{ mt: 2 }}>
       <AddButton />
-      {/* <EditButton />
-      <DeleteButton /> */}
+      {/* <SortButton tasks={props.tasks} /> */}
     </Stack>
   );
 }
@@ -730,7 +786,7 @@ function Body(props) {
         </Grid>
       </Grid>
       <Panel tasks={tasks} />
-      <Buttons />
+      <Buttons tasks={tasks} />
     </Stack>
   );
 }
@@ -749,15 +805,14 @@ function Dash(props) {
 function App() {
   return (
     <Routes>
+      {" "}
+      <Route path="/login" element={<SignIn />}></Route>
       <Route
         path="/"
         element={
-          // <ProtectedRoute>
           <Dash />
-          // </ProtectedRoute>
         }
       ></Route>
-      <Route path="/login" element={<SignIn />}></Route>
       <Route path="/register" element={<SignUp />}></Route>
     </Routes>
   );
