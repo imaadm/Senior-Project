@@ -24,7 +24,6 @@ import Button from "@mui/material/Button";
 import { Box, Container } from "@mui/system";
 import { CssBaseline } from "@mui/material";
 import React from "react";
-// We use Route in order to define the different routes of our application
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SignIn from "./components/SignIn";
@@ -32,9 +31,7 @@ import SignUp from "./components/SignUp";
 import DateTime from "./components/DateTime";
 import axios from "axios";
 
-// import ShowTaskList from './components/ShowTaskList';
-// import ShowBookDetails from './components/ShowTaskDetails';
-// import UpdateTaskInfo from './components/UpdateTaskInfo';
+
 
 function Bar(props) {
   let navigate = useNavigate();
@@ -64,41 +61,7 @@ function Bar(props) {
   );
 }
 
-// function SideNav(props) {
-//   let navigate = useNavigate();
-//   function onExit() {
-//     localStorage.setItem("userInfo", "");
-//     localStorage.setItem("isAuthenticated", false);
 
-//     navigate("/login", { replace: true });
-//   }
-//   return (
-//     <Drawer variant="permanent">
-//       <Box p={2} textAlign="center">
-//         <Typography p={1} variant="h5">
-//           Navigation
-//         </Typography>
-//         <Divider variant="middle" />
-//         <Stack mt={2} spacing={2}>
-//           <Button size="medium" variant="outlined" startIcon={<BarChart />}>
-//             Dashboard
-//           </Button>
-
-//           <Button
-//             sx={{ flexGrow: 1 }}
-//             size="medium"
-//             variant="outlined"
-//             color="error"
-//             startIcon={<CloseIcon />}
-//             onClick={onExit}
-//           >
-//             Sign Out
-//           </Button>
-//         </Stack>
-//       </Box>
-//     </Drawer>
-//   );
-// }
 function Tasks(props) {
   return (
     <Card sx={{ minWidth: 350, mx: 5, mt: 5 }}>
