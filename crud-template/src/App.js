@@ -208,7 +208,7 @@ function CalCard(props) {
 
 function CalGrid(props) {
   let hasTask = [];
-  let taskList = props.tasks.tasks;
+  let taskList = [...props.tasks.tasks];
   taskList.sort(function (a, b) {
     const date1 = new Date(a.due_date);
     const date2 = new Date(b.due_date);
@@ -342,17 +342,44 @@ function Schedule(props) {
 }
 
 function Panel(props) {
-  let taskList = props.tasks.tasks;
-  taskList.sort(function (a, b) {
-    const date1 = new Date(a.due_date);
-    const date2 = new Date(b.due_date);
 
-    return date1 - date2;
-  });
-  // console.log(taskList);
+  console.log(props.tasks.tasks);
+  const [open, setOpen] = React.useState(false);
 
-  for (let i = 0; i < taskList.length; i++) {
-    taskList[i].due_date = taskList[i].due_date.substring(0, 10);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  function sortCategory() {
+    props.tasks.tasks.sort(function (a, b) {
+      return a.category.localeCompare(b.category);
+    });
+    setOpen(false);
+  }
+  function sortDate() {
+    props.tasks.tasks.sort(function (a, b) {
+      const date1 = new Date(a.due_date);
+      const date2 = new Date(b.due_date);
+
+      return date1 - date2;
+    });
+    setOpen(false);
+  }
+  function sortPriority() {
+    props.tasks.tasks.sort(function (a, b) {
+      return b.priority - a.priority;
+    });
+
+    setOpen(false);
+  }
+  for (let i = 0; i < props.tasks.tasks.length; i++) {
+    props.tasks.tasks[i].due_date = props.tasks.tasks[i].due_date.substring(
+      0,
+      10
+    );
   }
 
   return (
@@ -391,35 +418,35 @@ function Panel(props) {
               <Divider />
             </Grid>
             <Grid item xs={1}>
-              {taskList.map(({ name }) => (
+              {props.tasks.tasks.map(({ name }) => (
                 <Typography variant={"h5"} sx={{ my: 1 }}>
                   {name}
                 </Typography>
               ))}
             </Grid>
             <Grid item xs={1}>
-              {taskList.map(({ category }) => (
+              {props.tasks.tasks.map(({ category }) => (
                 <Typography variant={"h5"} sx={{ my: 1 }}>
                   {category}
                 </Typography>
               ))}
             </Grid>
             <Grid item xs={1}>
-              {taskList.map(({ due_date }) => (
+              {props.tasks.tasks.map(({ due_date }) => (
                 <Typography variant={"h5"} sx={{ my: 1 }}>
                   {due_date}
                 </Typography>
               ))}
             </Grid>
             <Grid item xs={1}>
-              {taskList.map(({ priority }) => (
+              {props.tasks.tasks.map(({ priority }) => (
                 <Typography variant={"h5"} sx={{ my: 1 }}>
                   {priority}
                 </Typography>
               ))}
             </Grid>{" "}
             <Grid item xs={1}>
-              {taskList.map(({ _id }) => (
+              {props.tasks.tasks.map(({ _id }) => (
                 <Stack
                   direction={"row"}
                   justifyContent={"center"}
@@ -432,7 +459,27 @@ function Panel(props) {
             </Grid>
           </Grid>
         </Stack>
-      </Paper>
+      </Paper>{" "}
+      <Stack direction={"row"} justifyContent={"center"} sx={{ mt: 2 }}>
+        <Button
+          variant="contained"
+          onClick={handleClickOpen}
+          size="large"
+          sx={{ mx: 2 }}
+          color="success"
+        >
+          Sort
+        </Button>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Sort By:</DialogTitle>
+
+          <DialogActions>
+            <Button onClick={sortCategory}>Category</Button>
+            <Button onClick={sortDate}>Due Date</Button>
+            <Button onClick={sortPriority}>Priority</Button>
+          </DialogActions>
+        </Dialog>
+      </Stack>
     </CssBaseline>
   );
 }
@@ -522,8 +569,8 @@ function AddButton(props) {
             fullWidth
             label="Priority"
             type={"number"}
-            min="0"
-            max="10"
+            min="1"
+            max="5"
             variant="standard"
             onChange={handleChange}
             required
@@ -625,8 +672,8 @@ function EditButton(props) {
             fullWidth
             label="Priority"
             type={"number"}
-            min="0"
-            max="10"
+            min="1"
+            max="5"
             variant="standard"
             onChange={handleChange}
             required
@@ -689,64 +736,6 @@ function DeleteButton(props) {
   );
 }
 
-// function SortButton(props) {
-//   const [open, setOpen] = React.useState(false);
-//   let taskList = props.tasks.tasks;
-
-//   const handleClickOpen = () => {
-//     setOpen(true);
-//   };
-
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
-//   function sortName() {}
-//   function sortPriority() {
-//     taskList.sort(function (a, b) {
-//       const date1 = new Date(a.due_date);
-//       const date2 = new Date(b.due_date);
-
-//       return date1 - date2;
-//     });
-
-//     setOpen(false);
-//     window.location.reload();
-//   }
-
-//   return (
-//     <div>
-//       <Button
-//         variant="contained"
-//         onClick={handleClickOpen}
-//         size="large"
-//         sx={{ mx: 2 }}
-//         color="success"
-//       >
-//         Sort
-//       </Button>
-//       <Dialog open={open} onClose={handleClose}>
-//         <DialogTitle>Sort By:</DialogTitle>
-
-//         <DialogActions>
-//           <Button onClick={handleClose}>Name</Button>
-//           <Button onClick={handleClose}>Category</Button>{" "}
-//           <Button onClick={handleClose}>Due Date</Button>
-//           <Button onClick={sortPriority}>Priority</Button>
-//         </DialogActions>
-//       </Dialog>
-//     </div>
-//   );
-// }
-
-function Buttons(props) {
-  return (
-    <Stack direction={"row"} justifyContent={"center"} sx={{ mt: 2 }}>
-      <AddButton />
-      {/* <SortButton tasks={props.tasks} /> */}
-    </Stack>
-  );
-}
-
 function Body(props) {
   const [tasks, setTasks] = useState({});
 
@@ -786,7 +775,9 @@ function Body(props) {
         </Grid>
       </Grid>
       <Panel tasks={tasks} />
-      <Buttons tasks={tasks} />
+      <Stack direction={"row"} justifyContent={"center"} sx={{ mt: 2 }}>
+        <AddButton />
+      </Stack>
     </Stack>
   );
 }
@@ -807,12 +798,7 @@ function App() {
     <Routes>
       {" "}
       <Route path="/login" element={<SignIn />}></Route>
-      <Route
-        path="/"
-        element={
-          <Dash />
-        }
-      ></Route>
+      <Route path="/" element={<Dash />}></Route>
       <Route path="/register" element={<SignUp />}></Route>
     </Routes>
   );
