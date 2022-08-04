@@ -1,3 +1,2 @@
 # Senior-Project
-MERN learning project
-Task Manager application using MUI
+Full stack MERN task manager application using MUI
